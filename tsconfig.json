@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    "target": "es2015",
+    "types": ["node", "react"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": false,
+    "jsx": "react-jsx"  // This is for React 17 and later JSX transformation
+  },
+  "include": [
+    "resources/**/*",  // Make sure this includes all your TypeScript files
+    "resources/types/**/*",
+    "./webpack-env.d.ts"
+  ],
+  "exclude": [
+    "node_modules"  // Exclude node_modules from the TypeScript compilation
+  ]
+}

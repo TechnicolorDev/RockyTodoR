@@ -1,0 +1,253 @@
+// Variables
+$background-dark: #121212;
+$primary-blue: #2196f3;
+$secondary-blue: #0d47a1;
+$text-light: #e0e0e0;
+$error-color: #f44336;
+$button-hover: #444444;
+$button-active: #1a1a1a;
+$border-radius: 12px;
+$input-background: #333;
+$input-border: #444;
+
+// General Styles
+body {
+  background-color: $background-dark;
+  color: $text-light;
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: $primary-blue;
+  text-decoration: none;
+
+  &:hover {
+    color: $secondary-blue;
+  }
+}
+
+// Todos Component
+.todos {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.todo-list-h1 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.todo-list-p1 {
+  font-size: 1.2rem;
+  text-align: center;
+  margin-bottom: 20px;
+  color: $error-color;
+}
+
+.todo-list-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 1rem;
+  color: $text-light;
+  background-color: $primary-blue;
+  border: none;
+  border-radius: $border-radius;
+  cursor: pointer;
+  text-align: center;
+
+  &:hover {
+    background-color: $secondary-blue;
+  }
+
+  &:active {
+    background-color: $button-active;
+  }
+}
+
+.todo-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  margin-top: 20px;
+}
+
+// TodoItem Component
+.todo-item {
+  background-color: $input-background;
+  border: 1px solid $input-border;
+  border-radius: $border-radius;
+  padding: 20px;
+  color: $text-light;
+  transition: transform 0.3s, box-shadow 0.3s;
+
+  &:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  h3 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+  }
+
+  p {
+    margin: 5px 0;
+  }
+
+  .todo-item-p1 {
+    margin-bottom: 10px;
+  }
+
+  .todo-item-p2 {
+    margin-top: 10px;
+    font-style: italic;
+    color: lighten($text-light, 20%);
+  }
+
+  .todo-item-p3 {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 0.9rem;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .todo-item-btn {
+    display: block;
+    margin-top: 20px;
+    padding: 10px 16px;
+    font-size: 1rem;
+    color: $text-light;
+    background-color: $primary-blue;
+    border: none;
+    border-radius: $border-radius;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $button-hover;
+    }
+
+    &:active {
+      background-color: $button-active;
+    }
+  }
+}
+
+/* Toast notifications */
+.Toastify__toast-container {
+  z-index: 10000;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+}
+
+.Toastify__toast--top-right {
+  top: 20px;
+  right: 20px;
+}
+
+.Toastify__toast--bottom-right {
+  bottom: 20px;
+  right: 20px;
+}
+/* Success Toast with green accent */
+.Toastify__toast--success {
+  background-color: #333333 !important; /* Dark gray background */
+  color: #ffffff !important; /* White text */
+  border-left: 4px solid #28a745 !important; /* Green left border for success */
+}
+
+/* Error Toast with red accent */
+.Toastify__toast--error {
+  background-color: #333333 !important; /* Dark gray background */
+  color: #ffffff !important; /* White text */
+  border-left: 4px solid #dc3545 !important; /* Red left border for error */
+}
+
+/* Info Toast with blue accent */
+.Toastify__toast--info {
+  background-color: #333333 !important; /* Dark gray background */
+  color: #ffffff !important; /* White text */
+  border-left: 4px solid #17a2b8 !important; /* Blue left border for info */
+}
+
+/* Warning Toast with yellow accent */
+.Toastify__toast--warning {
+  background-color: #333333 !important; /* Dark gray background */
+  color: #ffffff !important; /* White text */
+  border-left: 4px solid #ffc107 !important; /* Yellow left border for warning */
+}
+
+/* Default Toast Style */
+.Toastify__toast {
+  background-color: #333333 !important; /* Dark gray background */
+  color: #ffffff !important; /* White text */
+  border-radius: 8px !important; /* Rounded corners */
+  padding: 10px 20px !important; /* Padding inside the toast */
+}
+
+/* Target the X icon svg directly */
+.Toastify__toast .Toastify__toast-icon--close svg {
+  fill: #ffffff !important; /* Change the fill color to white */
+}
+
+/* Alternatively, target the path within the svg */
+.Toastify__toast .Toastify__toast-icon--close svg path {
+  fill: #ffffff !important; /* Ensure the path is also white */
+}
+
+/* Optional: Hover effect for close icon to stay white */
+.Toastify__toast .Toastify__toast-icon--close svg:hover {
+  fill: #ffffff !important; /* Ensure the fill stays white on hover */
+}
+
+/* ConfirmationModal.css */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-container {
+  background: white;
+  padding: 20px;
+  border-radius: 5px;
+  width: 300px;
+  text-align: center;
+}
+
+.modal-actions {
+  margin-top: 20px;
+}
+
+.modal-button {
+  background-color: #ff3b30;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  margin: 0 10px;
+  border-radius: 3px;
+}
+
+.modal-button:hover {
+  background-color: #e50000;
+}
+
