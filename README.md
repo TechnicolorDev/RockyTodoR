@@ -11,7 +11,7 @@
 
 | Platform       | Support Level  | Status   |
 | -------------- | -------------- | -------- |
-| **Ubuntu 24.04** | Full Support   | ✅ Fully working, production-ready |
+| **Ubuntu 24.04** | Full Support   | ✅ Fully working, not production ready |
 | **Windows 10/11** | Partial Support | ⚠️ Installation working but may require additional configuration |
 
 > **Note**: The Ubuntu installation process is fully supported and tested. If you're running **Windows 10** or **11**, you might need to make additional adjustments to get everything running smoothly. The Ubuntu setup is recommended for ease of use and stability.
@@ -31,9 +31,14 @@ If you're running **Windows 10 or 11**, you can follow the steps, but be aware t
 
 ---
 
-## **2. Install Redis**
+## **2. Install Dependencies**
 
 ### **Step 1: Update System Packages**
+```bash
+sudo apt update
+sudo apt upgrade -y
+
+### **Step 2: Update System Packages**
 ```bash
 sudo apt update
 sudo apt upgrade -y
