@@ -37,8 +37,14 @@ If you're running **Windows 10 or 11**, you can follow the steps, but be aware t
 ```bash
 sudo apt update
 sudo apt upgrade -y
+```
 
-### **Step 2: Update System Packages**
+### **Step 2: Install dependencies**
 ```bash
-sudo apt update
-sudo apt upgrade -y
+sudo apt install redis-server
+sudo apt install nginx
+
+curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+sudo apt install -y nodejs
+
+```
