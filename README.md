@@ -28,6 +28,7 @@ Make sure you have the following installed on your system:
 - **Node.js 20.x** (for backend services)
 - **Redis** (for in-memory data storage)
 - **Nginx** (for reverse proxy and serving static files)
+- **Open port** (You need to have open port 6583 for backend to work)
 
 If you're running **Windows 10 or 11**, you can follow the steps, but be aware that additional configuration may be required.
 
@@ -186,7 +187,7 @@ server {
         }
 
         # If you're using reverse proxy to Express, add this block
-        proxy_pass http://localhost:3000;  # Assuming Express app is running on port 3000
+        proxy_pass http://localhost:6583;  # Assuming Express app is running on port 3000
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
