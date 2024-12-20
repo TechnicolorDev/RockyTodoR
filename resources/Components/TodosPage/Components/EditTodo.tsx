@@ -74,8 +74,8 @@ const EditTodoForm = () => {
         try {
             await deleteTodo(id);
             toast.success("Todo deleted successfully!");
-            setIsModalOpen(false); // Close the modal
-            navigate('/'); // Redirect after deletion
+            setIsModalOpen(false);
+            navigate('/');
         } catch (error) {
             console.error("Error deleting todo:", error);
             toast.error("Failed to delete the todo.");
@@ -111,14 +111,16 @@ const EditTodoForm = () => {
 
     return (
         <>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="edit-todo">
             <div>
-                <label>Name</label>
+                <h1 className="edit-todo-h1">Edit Todo</h1>
+                <label className="edit-todo-label">Name</label>
                 <input
                     type="text"
                     name="name"
                     value={todo.name}
                     onChange={handleInputChange}
+                    className="edit-todo-input"
                 />
             </div>
             <div>
@@ -128,6 +130,7 @@ const EditTodoForm = () => {
                     name="description"
                     value={todo.description}
                     onChange={handleInputChange}
+                    className="edit-todo-input"
                 />
             </div>
             <div>
@@ -137,6 +140,7 @@ const EditTodoForm = () => {
                     name="dueDate"
                     value={todo.dueDate}
                     onChange={handleInputChange}
+                    className="edit-todo-input"
                 />
             </div>
             <div>
@@ -146,13 +150,14 @@ const EditTodoForm = () => {
                     name="repoUrl"
                     value={todo.repoUrl}
                     onChange={handleInputChange}
+                    className="edit-todo-input"
                 />
             </div>
 
             {error && <div className="error">{error}</div>}
-            <button type="submit">Update Todo</button>
+            <button type="submit" className="edit-todo-btn">Update Todo</button>
             <button type="button" onClick={handleDelete}
-                    style={{marginLeft: '10px', backgroundColor: 'red', color: 'white'}}>
+                    className="edit-todo-delete">
                 Delete Todo
             </button>
         </form>

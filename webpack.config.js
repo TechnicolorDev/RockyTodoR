@@ -115,6 +115,7 @@ module.exports = {
             'process.env.FRONTEND_URL': JSON.stringify(process.env.FRONTEND_URL),
             'process.env.FRONTEND_URL_2': JSON.stringify(process.env.FRONTEND_URL_2),
             'process.env.APP_URL': JSON.stringify(process.env.APP_URL),
+            'process.env.APP_NAME': JSON.stringify(process.env.APP_NAME),
         }),
         new BundleAnalyzerPlugin({
             analyzerMode: 'static',

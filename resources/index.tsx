@@ -1,10 +1,9 @@
-// resources/index.tsx
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./scss/styles.css";  // Import CSS styles
-import App from "./App"; // Import the App component
+import "./scss/styles.css";
+import App from "./App";
 
-const root = ReactDOM.createRoot(document.getElementById("root")!); // Create root for React 18
+const root = ReactDOM.createRoot(document.getElementById("root")!);
 root.render(
     <React.StrictMode>
         <App />

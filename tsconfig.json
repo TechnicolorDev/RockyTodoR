@@ -7,6 +7,11 @@
       "dom.iterable",
       "esnext"
     ],
+
+    "baseUrl": "./resources",  // This tells TypeScript where to start resolving paths from
+    "paths": {
+      "@components/*": ["components/*"]
+    },
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -28,5 +33,5 @@
   ],
   "exclude": [
     "node_modules"  // Exclude node_modules from the TypeScript compilation
-  ]
+  ],
 }

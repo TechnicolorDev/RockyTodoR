@@ -1,48 +1,91 @@
 const csrf = require('csrf');
-const csrfInstance = new csrf(); // Properly instantiate the csrf object
+const csrfInstance = new csrf();
 
-// Middleware to generate CSRF token
-const generateCSRFToken = async (req, res, next) => {
+// Session-based CSRF Token generation
+const sessionCSRFToken = async (req, res, next) => {
     try {
-        // Check if the session contains a valid csrfSecret, otherwise generate one
         let secret = req.session.csrfSecret;
         if (!secret) {
-            secret = await csrfInstance.secret(); // Generate a new CSRF secret if not available
-            req.session.csrfSecret = secret; // Store the secret in the session
+            // Generate a new CSRF secret for the session if one doesn't exist
+            secret = await csrfInstance.secret();
+            req.session.csrfSecret = secret;
         }
 
-        // Create a CSRF token using the secret
+        // Generate CSRF Token
         const csrfToken = csrfInstance.create(secret);
-        res.locals.csrfToken = csrfToken; // Save the token for use in templates or response
+        res.locals.csrfToken = csrfToken;
 
-        // Send the CSRF token in the response header
+        // Log the CSRF token to the console only in development
+        if (process.env.NODE_ENV === 'development') {
+            console.log('Generated Session CSRF Token:', csrfToken);
+        }
+
+        // Set the CSRF token in the response headers (not in cookies)
         res.setHeader('X-CSRF-Token', csrfToken);
 
-        // Continue processing the request
         next();
     } catch (error) {
-        console.error('Error generating CSRF token:', error);
-        res.status(500).json({ error: 'Failed to generate CSRF token' });
+        console.error('Error generating session CSRF token:', error);
+        res.status(500).json({ error: 'Failed to generate session CSRF token' });
     }
 };
 
-// Middleware to verify CSRF token
-const verifyCSRFToken = (req, res, next) => {
+// Non-session-based CSRF Token generation
+const nonSessionCSRFToken = async (req, res, next) => {
     try {
-        const csrfToken = req.header('X-CSRF-Token'); // Retrieve the CSRF token from the request header
-        const secret = req.session.csrfSecret; // Retrieve the CSRF secret from the session
+        // Generate a random CSRF secret that isn't stored in the session
+        const secret = await csrfInstance.secret();
 
-        if (!csrfToken || !secret || !csrfInstance.verify(secret, csrfToken)) {
-            return res.status(403).json({ error: 'Invalid or missing CSRF token' });
+        // Generate CSRF Token
+        const csrfToken = csrfInstance.create(secret);
+        res.locals.csrfToken = csrfToken;
+
+        // Log the CSRF token to the console only in development
+        if (process.env.NODE_ENV === 'development') {
+            console.log('Generated Non-Session CSRF Token:', csrfToken);
         }
 
-        // Continue processing the request if the token is valid
+        // Set the CSRF token in the response headers (not in cookies)
+        res.setHeader('X-CSRF-Token', csrfToken);
+
         next();
     } catch (error) {
-        console.error('Error verifying CSRF token:', error);
-        res.status(403).json({ error: 'Invalid CSRF token' });
+        console.error('Error generating non-session CSRF token:', error);
+        res.status(500).json({ error: 'Failed to generate non-session CSRF token' });
     }
 };
 
-// Export the csrfInstance properly
-module.exports = { generateCSRFToken, verifyCSRFToken, csrfInstance };
+// CSRF token verification (common for both session and non-session CSRF tokens)
+const verifyCSRFToken = (req, res, next) => {
+    try {
+        // 1. Get the CSRF token from the request headers (can also use cookies or body if necessary)
+        const csrfToken = req.header('X-CSRF-Token');  // Look for CSRF token in headers
+
+        // 2. If no CSRF token is found in the request, reject the request
+        if (!csrfToken) {
+            return res.status(403).json({ error: 'CSRF token is missing' });  // Fail if CSRF token is missing
+        }
+
+        // 3. Get the CSRF secret (this could be stored in session or memory, depending on your setup)
+        const secret = req.session.csrfSecret;  // Session-based CSRF secret
+
+        // 4. If secret exists and CSRF token is provided, verify it
+        if (secret && csrfInstance.verify(secret, csrfToken)) {
+            return next();  // CSRF token verification passed (session-based)
+        }
+
+        // 5. If no session secret (non-session route), verify CSRF token directly
+        if (!secret && csrfInstance.verify(secret, csrfToken)) {
+            return next();  // CSRF token verification passed (non-session route)
+        }
+
+        // 6. If CSRF token verification fails, respond with an error
+        return res.status(403).json({ error: 'Invalid CSRF token' });
+
+    } catch (error) {
+        console.error('Error verifying CSRF token:', error);
+        return res.status(500).json({ error: 'Internal Server Error while verifying CSRF token' });
+    }
+};
+
+module.exports = { sessionCSRFToken, nonSessionCSRFToken, verifyCSRFToken, csrfInstance };

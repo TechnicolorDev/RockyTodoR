@@ -8,7 +8,6 @@ const ForgotPassword = () => {
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
 
-    // Validate email format
     const isValidEmail = (email: string): boolean => {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return emailRegex.test(email);
@@ -32,7 +31,7 @@ const ForgotPassword = () => {
         }
 
         try {
-            const response = await sendForgotPasswordEmailRequest(sanitizedEmail); // Call the API
+            const response = await sendForgotPasswordEmailRequest(sanitizedEmail);
             toast.success('If this email exists, a password reset link has been sent.');
             setMessage('Check your inbox for further instructions.');
         } catch (err) {
@@ -42,20 +41,21 @@ const ForgotPassword = () => {
     };
 
     return (
-        <div>
-            <h2>Forgot Password</h2>
+        <div className="forgot-password-div">
+            <h2 className="forgot-password-h1">Forgot Password</h2>
             <form onSubmit={handleSubmit}>
                 <div>
-                    <label htmlFor="email">Email</label>
+                    <label htmlFor="email" className="forgot-password-email">Email</label>
                     <input
                         type="email"
                         id="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
+                        className="forgot-password-email-input"
                     />
                 </div>
-                <button type="submit">Send Password Reset Email</button>
+                <button type="submit" className="forgot-password-submit">Send Password Reset Email</button>
             </form>
 
             {message && <p style={{ color: 'green' }}>{DOMPurify.sanitize(message)}</p>}

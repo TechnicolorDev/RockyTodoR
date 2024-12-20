@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { resetPassword } from '../../../../api/api';
-import {toast} from "react-toastify"; // Assuming this function sends a password reset request to the backend
+import {toast} from "react-toastify";
 import zxcvbn from 'zxcvbn';
 import DOMPurify from "dompurify";
 import * as stream from "node:stream";
@@ -13,14 +13,13 @@ const ResetPassword: React.FC = () => {
     const [message, setMessage] = useState('');
     const [loading, setLoading] = useState(false);
 
-    const location = useLocation(); // To get the query params (token)
+    const location = useLocation();
     const navigate = useNavigate();
 
     const queryParams = new URLSearchParams(location.search);
-    const token = queryParams.get('token'); // Extract token from URL
+    const token = queryParams.get('token');
 
     useEffect(() => {
-        // If no token is found, redirect to an error page or show a message
         if (!token) {
             toast.error('Invalid or missing token');
         }
@@ -61,7 +60,6 @@ const ResetPassword: React.FC = () => {
             return;
         }
 
-        // Handle case when token is null
         if (!token) {
             setError('Invalid token, please try again.');
             return;
@@ -70,14 +68,11 @@ const ResetPassword: React.FC = () => {
         setLoading(true);
 
         try {
-            // Make the API request to reset the password
-            const response = await resetPassword(token, sanitizedNewPassword); // Send the token and the new password to the backend API
+            const response = await resetPassword(token, sanitizedNewPassword);
             toast.success(response.message || 'Password reset successfully!');
-            navigate('/login'); // Redirect to login after successful reset
+            navigate('/login');
         } catch (err: any) {
-            // Log the full error response
             console.error('Error details:', err);
-            // Display error message from backend or default message
             toast.error(err.response?.data?.error || 'Failed to reset password. Please try again.');
         } finally {
             setLoading(false);
@@ -86,7 +81,7 @@ const ResetPassword: React.FC = () => {
 
     return (
         <div className="reset-password-container">
-            <h2>Reset Your Password</h2>
+            <h2 className="reset-password-h1">Reset Your Passwor</h2>
             {error && <p style={{ color: 'red' }}>{DOMPurify.sanitize(error)}</p>}
             {message && <p style={{ color: 'green' }}>{DOMPurify.sanitize(message)}</p>}
 
@@ -99,6 +94,7 @@ const ResetPassword: React.FC = () => {
                         value={newPassword}
                         onChange={(e) => setNewPassword(e.target.value)}
                         required
+                        className="reset-password-input"
                     />
                 </div>
                 <div>
@@ -109,9 +105,10 @@ const ResetPassword: React.FC = () => {
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
                         required
+                        className="reset-password-input"
                     />
                 </div>
-                <button type="submit" disabled={loading}>
+                <button type="submit" disabled={loading} className="reset-password-btn">
                     {loading ? 'Resetting...' : 'Reset Password'}
                 </button>
             </form>

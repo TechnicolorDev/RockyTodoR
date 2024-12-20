@@ -1,40 +1,58 @@
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                 !DEPRECATION WARNING!                                           //
-//              This was just used to test endpoints when postman didnt work                       //
-//                                                                                                 //
-//                                                                                                 //
-/////////////////////////////////////////////////////////////////////////////////////////////////////
-
 const axios = require('axios');
 
-// Define the Todo ID and the updated data
-const todoId = '6a2d02d1';  // The Todo ID you want to update
-const data = {
-    name: 'Updated Todo Name',        // New name for the Todo
-    description: 'Updated description for the Todo',
-    dueDate: '2024-12-31',            // Example due date
-    repoUrl: 'https://github.com/updated-repo-url', // Example repo URL
+// Define the credentials object
+const credentials = {
+    email: "johnd2of2e343f@example.com",
+    password: "password123"
 };
 
-// CSRF token (if applicable, replace with actual token if needed)
-const csrfToken = 'your-csrf-token-here';  // Replace with the actual CSRF token if required
+// Define the Bearer token
+const bearerToken = "fACEbLcmw9RV7sn4xkjC4oPc";
 
-// Send the PATCH request
-axios.patch(`http://localhost:3000/api/todos/${todoId}`, data, {
-    headers: {
-        'Content-Type': 'application/json',  // Ensure the content type is set to JSON
-        'X-CSRF-Token': csrfToken,          // Add CSRF token if necessary (remove if not using)
-    },
-})
-    .then(response => {
-        console.log('Todo updated successfully:', response.data);
-    })
-    .catch(error => {
-        if (error.response) {
-            console.error('Error response:', error.response.data);
-        } else if (error.request) {
-            console.error('Error request:', error.request);
+// Define the login function to handle the request
+const login = async (credentials) => {
+    try {
+        // Step 1: Send the login request with credentials and Bearer token in headers
+        const response = await axios.post('http://localhost:3000/api/login', credentials, {
+            withCredentials: true,  // Include cookies (JWT or other auth tokens)
+            headers: {
+                'Authorization': `Bearer ${bearerToken}`  // Add Bearer token in the Authorization header
+            }
+        });
+
+        // Step 2: Return the login response if login is successful
+        if (response.data && response.data.message === 'Login successful') {
+            return response.data;
         } else {
-            console.error('Error message:', error.message);
+            throw new Error('Invalid login response');
         }
-    });
+    } catch (error) {
+        if (error.response && error.response.status === 401) {
+            // Handle 401 Unauthorized, which means login failed
+            console.log('Login failed: Unauthorized access');
+            return { message: 'Login failed: Unauthorized' };
+        }
+        console.error('Error during login:', error);
+        throw new Error('Login failed');
+    }
+};
+
+// Function to make the login request and handle the response
+const performLogin = async () => {
+    try {
+        // Call the login function and pass the credentials
+        const response = await login(credentials);
+
+        // Handle the response
+        if (response.message === 'Login successful') {
+            console.log('Login successful!');
+        } else {
+            console.log('Login failed:', response.message);
+        }
+    } catch (error) {
+        console.error('Error during login:', error);
+    }
+};
+
+// Call the performLogin function to trigger the login process
+performLogin();

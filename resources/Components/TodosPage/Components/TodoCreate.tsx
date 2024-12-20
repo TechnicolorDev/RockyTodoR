@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { createTodo } from '../../../api/api'; // Assuming the createTodo function is correctly handling the API call
+import { createTodo } from '../../../api/api';
 import DOMPurify from 'dompurify';
 import {useNavigate} from "react-router-dom";
 import "../../../scss/create.scss";
@@ -24,7 +24,6 @@ const TodoCreate: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        // Sanitize the input before submitting
         const sanitizedTodo = {
             name: DOMPurify.sanitize(todo.name),
             description: DOMPurify.sanitize(todo.description),
@@ -33,7 +32,7 @@ const TodoCreate: React.FC = () => {
         };
 
         try {
-            const response = await createTodo(sanitizedTodo); // Call the API without todoId
+            const response = await createTodo(sanitizedTodo);
             console.log('Todo created:', response);
             navigate('/');
             toast.success("Todo successfully created!")
@@ -54,6 +53,7 @@ const TodoCreate: React.FC = () => {
                     placeholder="Name"
                     value={todo.name}
                     onChange={handleChange}
+                    className="todo-create-input"
                 />
                 <input
                     type="text"
@@ -61,12 +61,14 @@ const TodoCreate: React.FC = () => {
                     placeholder="Description"
                     value={todo.description}
                     onChange={handleChange}
+                    className="todo-create-input"
                 />
                 <input
                     type="date"
                     name="dueDate"
                     value={todo.dueDate}
                     onChange={handleChange}
+                    className="todo-create-input"
                 />
                 <input
                     type="url"
@@ -74,6 +76,7 @@ const TodoCreate: React.FC = () => {
                     placeholder="Repo URL"
                     value={todo.repoUrl}
                     onChange={handleChange}
+                    className="todo-create-input"
                 />
                 <button type="submit" className="create-btn">Create Todo</button>
             </form>

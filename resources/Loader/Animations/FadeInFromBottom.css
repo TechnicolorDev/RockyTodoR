@@ -1,0 +1,19 @@
+.centered-wrapper {
+    position: absolute; /* Relative to its parent container */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center the wrapper */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 400px;
+    opacity: 0; /* Start with hidden */
+    transform: translateY(30px); /* Start from below */
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out; /* Smooth transition */
+
+    &.visible {
+        opacity: 1; /* Fade in */
+        transform: translateY(0); /* Move to original position */
+    }
+}

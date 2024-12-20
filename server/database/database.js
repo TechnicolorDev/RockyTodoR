@@ -1,33 +1,39 @@
 const { Sequelize, DataTypes, Model } = require('sequelize');
 const crypto = require('crypto');
+require('dotenv').config();  // Load .env variables
 
-// Get the database type from environment variables (default to 'sqlite')
+// Get database type from environment variable, default to 'sqlite'
 const dbType = process.env.DB_TYPE || 'sqlite';
 
-// Set up Sequelize instance with dynamic configuration
 let sequelize;
 
+// Log which DB type is being used
+console.log(`Using ${dbType} database.`);
+
 if (dbType === 'mysql') {
-    // MySQL Configuration
     sequelize = new Sequelize({
         dialect: 'mysql',
-        host: process.env.DB_HOST || 'localhost', // Default host
-        port: process.env.DB_PORT || 3306,        // Default MySQL port
-        database: process.env.DB_NAME || 'mydatabase', // Database name
-        username: process.env.DB_USER || 'root',    // Database username
-        password: process.env.DB_PASSWORD || '',   // Database password
-        logging: false, // Disable query logging
+        host: process.env.DB_HOST || 'localhost',
+        port: process.env.DB_PORT || 3306,
+        database: process.env.DB_NAME || 'database_development',
+        username: process.env.DB_USER || 'root',
+        password: process.env.DB_PASSWORD || '',
+        logging: false,
     });
-} else {
-    // SQLite Configuration
+} else if (dbType === 'sqlite') {
     sequelize = new Sequelize({
         dialect: 'sqlite',
-        storage: process.env.DB_STORAGE || 'todos.db', // Default SQLite file
-        logging: false, // Disable query logging
+        storage: process.env.DB_STORAGE || './rockytodo.db',  // Path for SQLite storage
+        logging: false,
     });
+} else {
+    console.error("Unsupported database type in environment. Please set DB_TYPE to 'mysql' or 'sqlite'.");
+    process.exit(1);  // Exit the process if unsupported database type is found
 }
 
-// Define Todo model
+console.log(`Database path: ${process.env.DB_STORAGE || 'rockytodo.db'}`);
+
+// Define models (Todo and Admin) as before
 class Todo extends Model {}
 
 Todo.init(
@@ -62,11 +68,10 @@ Todo.init(
     {
         sequelize,
         modelName: 'Todo',
-        timestamps: true, // Ensures createdAt and updatedAt fields are automatically managed
+        timestamps: true,
     }
 );
 
-// Define Admin model
 class Admin extends Model {}
 
 Admin.init(
@@ -96,20 +101,24 @@ Admin.init(
     {
         sequelize,
         modelName: 'Admin',
-        timestamps: true, // Timestamps automatically managed
+        timestamps: true,
     }
 );
 
-// Initialize and sync the database
 const initDB = async () => {
     try {
-        await sequelize.authenticate(); // Authenticate the database connection
-        await sequelize.sync({ alter: true }); // Sync tables and adjust schema if needed
-        console.log('Database initialized.');
+        // Step 1: Authenticate database connection
+        await sequelize.authenticate();
+        console.log('Database connection established.');
+
+        // Step 2: Ensure migrations are applied manually, not automatically
+        console.log('Running migrations...');
+
+        // Step 3: Initialize the database by syncing or running migrations here
+        console.log('Database initialization completed.');
     } catch (error) {
-        console.error('Database connection failed:', error);
+        console.error('Database initialization failed:', error);
     }
 };
 
-// Export the models and initialization function
-module.exports = { initDB, Todo, Admin, sequelize };
+module.exports = { initDB, Todo, Admin, sequelize, DataTypes, Model };

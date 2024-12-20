@@ -20,13 +20,11 @@ router.post('/login', async (req, res) => {
             return res.status(400).json({ error: 'Email and password are required.' });
         }
 
-        // Find admin
         const admin = await Admin.findOne({ where: { email } });
         if (!admin || !(await bcrypt.compare(password, admin.password))) {
             return res.status(401).json({ error: 'Invalid credentials.' });
         }
 
-        // Set session
         req.session.adminId = admin.id;
 
         res.status(200).json({ message: 'Login successful.', adminId: admin.id });

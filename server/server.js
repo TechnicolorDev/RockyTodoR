@@ -7,61 +7,65 @@ const { initDB } = require('./database/database');
 const todoRoutes = require('./routers/todoRoutes');
 const cors = require("cors");
 const chalk = require('chalk');
+const cookieParser = require('cookie-parser');
 const path = require('path');
+const dotenv = require('dotenv');
 
-// Initialize the Express app
 const app = express();
-const PORT = process.env.PORT || 6583;
+const PORT = process.env.PORT || 3000;
 const APP_URL = process.env.APP_URL;
 const CORS_URL_1 = process.env.CORS_URL_1;
 
-// Session secret generator
+dotenv.config();
+
+app.use(cookieParser());
 const generateSessionSecret = () => {
     return crypto.randomBytes(64).toString('hex');
 };
 
 const sessionSecret = generateSessionSecret();
+app.use(cookieParser());
 
-// Middleware
 app.use(express.json());
 const corsOptions = {
-    origin: (origin, callback) => {
-        // Allow both APP_URL and CORS_URL_1 as valid origins
-        if (origin === APP_URL || origin === CORS_URL_1 || !origin) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    },
-    credentials: true, // Allow credentials to be sent
+    origin: 'http://localhost:3001',  // Allow the specific frontend origin
+    credentials: true,  // Allow cookies and authentication headers
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-CSRF-Token'],
+    exposedHeaders: ['X-CSRF-Token', 'Access-Token', 'Uid'],
 };
+
 app.use(cors(corsOptions));
 
-app.use(session({
-    secret: sessionSecret,
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false }, // Set `secure: true` if using HTTPS in production
-}));
 
-// Serve static files from the React frontend
+
+const isSecure = APP_URL.startsWith('https');
+
+app.use(session({
+    secret: sessionSecret,       // Session secret for signing the session ID cookie
+    resave: false,               // Don't save the session if it wasn't modified
+    saveUninitialized: true,     // Save a session that is new but not modified
+    cookie: {
+        secure: isSecure,        // Only use secure cookies if using https (production)
+        httpOnly: true,          // Prevent JavaScript access to cookies
+        maxAge: 1000 * 60 * 60,  // Set session cookie expiration to 1 hour
+    },
+}));
 app.use(express.static(path.join(__dirname, '../public/assets')));
 
-// API routes
 app.use('/api', todoRoutes);
 
-// Fallback route to serve the React app's `index.html` for all non-API routes
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../public/assets', 'index.html'));
 });
 
-// Start the server
+console.log(`Session cookies 'secure' flag is set to: ${isSecure ? 'true (HTTPS)' : 'false (HTTP)'}`);
+
+
 app.listen(PORT, () => {
     console.log(`Server running on ${APP_URL}:${PORT}`);
     initDB();
 });
 
-// Winged message (custom message)
 const wingedMessage = () => {
     const rocky = [
         '__________               __           ',

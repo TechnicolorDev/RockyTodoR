@@ -1,166 +1,18 @@
-// Variables
-$background-dark: #121212;
-$primary-blue: #2196f3;
-$secondary-blue: #0d47a1;
-$text-light: #e0e0e0;
-$error-color: #f44336;
-$button-hover: #444444;
-$button-active: #1a1a1a;
-$border-radius: 12px;
-$input-background: #333;
-$input-border: #444;
+@import 'variables';
 
-// General Styles
-body {
-  background-color: $background-dark;
-  color: $text-light;
-  font-family: 'Arial', sans-serif;
+* {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-family: var(--font-family);
 }
 
-a {
-  color: $primary-blue;
-  text-decoration: none;
-
-  &:hover {
-    color: $secondary-blue;
-  }
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--background-color);
 }
 
-// Todos Component
-.todos {
-  padding: 20px;
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.todo-list-h1 {
-  font-size: 2rem;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-.todo-list-p1 {
-  font-size: 1.2rem;
-  text-align: center;
-  margin-bottom: 20px;
-  color: $error-color;
-}
-
-.todo-list-btn {
-  display: inline-block;
-  padding: 10px 20px;
-  font-size: 1rem;
-  color: $text-light;
-  background-color: $primary-blue;
-  border: none;
-  border-radius: $border-radius;
-  cursor: pointer;
-  text-align: center;
-
-  &:hover {
-    background-color: $secondary-blue;
-  }
-
-  &:active {
-    background-color: $button-active;
-  }
-}
-
-.todo-list {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
-  margin-top: 20px;
-}
-
-// TodoItem Component
-.todo-item {
-  background-color: $input-background;
-  border: 1px solid $input-border;
-  border-radius: $border-radius;
-  padding: 20px;
-  color: $text-light;
-  transition: transform 0.3s, box-shadow 0.3s;
-
-  &:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-  }
-
-  h3 {
-    font-size: 1.8rem;
-    margin-bottom: 10px;
-  }
-
-  p {
-    margin: 5px 0;
-  }
-
-  .todo-item-p1 {
-    margin-bottom: 10px;
-  }
-
-  .todo-item-p2 {
-    margin-top: 10px;
-    font-style: italic;
-    color: lighten($text-light, 20%);
-  }
-
-  .todo-item-p3 {
-    display: inline-block;
-    margin-top: 10px;
-    font-size: 0.9rem;
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-
-  .todo-item-btn {
-    display: block;
-    margin-top: 20px;
-    padding: 10px 16px;
-    font-size: 1rem;
-    color: $text-light;
-    background-color: $primary-blue;
-    border: none;
-    border-radius: $border-radius;
-    cursor: pointer;
-
-    &:hover {
-      background-color: $button-hover;
-    }
-
-    &:active {
-      background-color: $button-active;
-    }
-  }
-}
-
-/* Toast notifications */
-.Toastify__toast-container {
-  z-index: 10000;
-  position: fixed;
-  top: 20px;
-  right: 20px;
-}
-
-.Toastify__toast--top-right {
-  top: 20px;
-  right: 20px;
-}
-
-.Toastify__toast--bottom-right {
-  bottom: 20px;
-  right: 20px;
-}
-/* Success Toast with green accent */
 .Toastify__toast--success {
   background-color: #333333 !important; /* Dark gray background */
   color: #ffffff !important; /* White text */
@@ -211,43 +63,928 @@ a {
   fill: #ffffff !important; /* Ensure the fill stays white on hover */
 }
 
-/* ConfirmationModal.css */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+
+.login-wrapper {
+  position: fixed; /* Keep it fixed in the viewport */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Center the wrapper */
+  width: 100%;
+  max-width: 400px;
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  z-index: 9999; /* Ensure it's on top of other content */
+  .login {
+    background: var(--secondary-color-bg);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 25px;
+    padding: 40px;
+    width: 100%;
+    text-align: center;
+    transition: all 0.3s ease-in-out;
+
+    .text-login {
+      font-size: 30px;
+      font-weight: 700;
+      color: var(--secondary-color);
+      margin-bottom: 20px;
+    }
+
+    .login-input {
+      width: 100%;
+      padding: 17px;
+      margin-bottom: 20px;
+      font-weight: 550;
+      border: 1px solid var(--secondary-color-bg);
+      border-radius: 30px;
+      background-color: var(--input-bg-color);
+      color: var(--secondary-color);
+      font-size: 16px;
+      transition: border-color 0.3s ease;
+
+      &:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 5px rgba(var(--primary-color), 0.5);
+      }
+
+      &::placeholder {
+        color: #aaa;
+      }
+    }
+
+    .loginb-btn {
+      width: 60%;
+      padding: 12px;
+      font-weight: 700;
+      background-color: var(--primary-color);
+      color: #fff;
+      border: none;
+      border-radius: 25px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: var(--button-hover-color);
+      }
+    }
+
+    .forgot-password-text {
+      display: block;
+      margin-top: 15px;
+      color: var(--invisible-text);
+      text-decoration: none;
+      font-size: 14px;
+      transition: color 0.3s ease;
+
+      &:hover {
+        color: (var(--primary-color), 10%);
+      }
+    }
+  }
 }
 
-.modal-container {
-  background: white;
-  padding: 20px;
-  border-radius: 5px;
-  width: 300px;
+// Responsive design for mobile
+@media (max-width: 600px) {
+  .login {
+    padding: 20px;
+    max-width: 90%;
+  }
+
+  .text-login {
+    font-size: 20px;
+  }
+
+  .login-input {
+    font-size: 14px;
+  }
+
+  .loginb-btn {
+    font-size: 14px;
+  }
+
+  .forgot-password-text {
+    font-size: 12px;
+  }
+}
+.forgot-password-div {
+  background: var(--secondary-color-bg);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 25px;
+  padding: 40px;
+  width: 100%;
+  max-width: 400px;
   text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.3s ease-in-out;
+
+  .forgot-password-h1 {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--secondary-color);
+    margin-bottom: 20px;
+  }
+
+  .forgot-password-email {
+    display: block;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--secondary-color);
+    margin-bottom: 10px;
+    margin-left: 15px;
+    text-align: left;
+  }
+
+  .forgot-password-email-input {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid var(--secondary-color-bg);
+    border-radius: 25px;
+    background-color: var(--input-bg-color);
+    color: var(--secondary-color);
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+
+    &:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 5px rgba(var(--primary-color), 0.5);
+    }
+
+    &::placeholder {
+      color: #aaa;
+    }
+  }
+
+  .forgot-password-submit {
+    width: 100%;
+    padding: 12px;
+    font-weight: 700;
+    background-color: var(--primary-color);
+    color: #fff;
+    border: none;
+    border-radius: 25px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+
+    &:hover {
+      background-color: var(--button-hover-color);
+    }
+  }
+
+  p {
+    margin-top: 15px;
+    font-size: 14px;
+  }
+
+  p[style*='color: green'] {
+    color: #28a745; /* Override green color */
+  }
+
+  p[style*='color: red'] {
+    color: #dc3545; /* Override red color */
+  }
+}
+.reset-password-container {
+  background: var(--secondary-color-bg);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 40px;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.3s ease-in-out;
+
+  .reset-password-h1 {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--secondary-color);
+    margin-bottom: 20px;
+  }
+
+  p[style*='color: red'] {
+    color: #dc3545; /* Error text color */
+    font-size: 14px;
+    margin-bottom: 15px;
+  }
+
+  p[style*='color: green'] {
+    color: #28a745; /* Success text color */
+    font-size: 14px;
+    margin-bottom: 15px;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    div {
+      width: 100%;
+      margin-bottom: 20px;
+
+      label {
+        display: block;
+        font-size: 16px;
+        font-weight: 600;
+        color: var(--secondary-color);
+        margin-bottom: 8px;
+        text-align: left;
+      }
+
+      .reset-password-input {
+        width: 100%;
+        padding: 15px;
+        border: 1px solid var(--secondary-color-bg);
+        border-radius: 25px;
+        background-color: var(--input-bg-color);
+        color: var(--secondary-color);
+        font-size: 16px;
+        transition: border-color 0.3s ease;
+
+        &:focus {
+          outline: none;
+          border-color: var(--primary-color);
+          box-shadow: 0 0 5px rgba(var(--primary-color), 0.5);
+        }
+
+        &::placeholder {
+          color: #aaa;
+        }
+      }
+    }
+
+    .reset-password-btn {
+      width: 100%;
+      padding: 12px;
+      font-weight: 700;
+      background-color: var(--primary-color);
+      color: #fff;
+      border: none;
+      border-radius: 25px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: var(--button-hover-color);
+      }
+
+      &:disabled {
+        background-color: (var(--primary-color), 10%);
+        cursor: not-allowed;
+      }
+    }
+  }
+}
+.todos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column; // Aligns content vertically in the center
+  text-align: center;
+  margin-top: 200px;
+
+  .todo-list-h1 {
+    justify-content: center;
+    text-align: center;
+    align-content: center;
+    color: white;
+    font-size: 50px;
+    font-weight: 700;
+    transition: 0.3s ease color;
+
+    &:hover {
+      color: var(--primary-color);
+    }
+  }
+
+  .todo-list-btn {
+    margin-top: 20px;
+    color: white;
+    background-color: var(--primary-color);
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-size: 17px;
+    cursor: pointer;
+    font-weight: 700;
+    border: none;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: var(--button-hover-color);
+    }
+  }
+}
+.todo-list{
+  margin-top: 50px;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: center;
+  @media (max-width: 450px) {
+    width: 95%;
+
+  }
+  .todo-item {
+    display: flex;
+    flex-direction: column; // Stack the contents vertically
+    text-align: left;
+    align-items: flex-start; // Align items to the top
+    margin-top: 20px; // Reduces the space between the todo items
+    background: var(--gradient-bg);
+    width: 400px; // Fixed width to avoid stretching
+    max-width: 100%; // Ensure it doesn't overflow the container
+    padding: 20px; // Add padding to create space inside the todo item
+    border-radius: 25px; // Rounded corners for the todo item
+    transition: transform 0.3s ease; // Adds a smooth hover effect for interaction
+    border: 4px solid #111111;
+    box-shadow: 0 0 0 1px #333333;
+
+    &:hover {
+      transform: scale(1.02); // Slight zoom effect on hover
+    }
+
+    .todo-item-h3 {
+      font-size: 24px;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 10px;
+    }
+
+    .todo-item-p1 {
+      font-size: 16px;
+      color: white;
+      margin-bottom: 10px;
+    }
+
+    .todo-item-p2 {
+      font-size: 14px;
+      color: var(--invisible-text);
+      margin-bottom: 15px;
+    }
+
+    .todo-item-p3 {
+      font-size: 14px;
+      color: var(--primary-color);
+      text-decoration: none;
+      margin-bottom: 15px;
+
+      &:hover {
+        text-decoration: underline; // Underline the link on hover
+      }
+    }
+
+    .todo-item-btn {
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 10px 40px;
+
+      font-weight: 700;
+      border-radius: 25px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+
+      width: auto; // Adjusts based on padding and content size
+      max-width: 100%; // Ensures the button doesn't stretch beyond its container
+
+      text-align: center;
+      display: inline-flex;  // Ensure the button is inline but still allows centering
+      justify-content: center;
+      align-items: center;   // Center the text vertically
+
+      &:hover {
+        background-color: var(--button-hover-color);
+        transform: translateY(-2px); // Add slight hover effect
+      }
+    }
+
+  }
+}
+// create.scss
+
+.todo-create {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 30px;
+  background-color: var(--secondary-color-bg);
+  border-radius: 25px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: (var(--font-family));
+
+  /* Ensure the container is centered both vertically and horizontally */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Centers the container */
+
+  text-align: center;
+
+  .create-h1 {
+    font-size: 32px;
+    color: var(--secondary-color);
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-align: center;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: var(--primary-color); // Hover color effect
+    }
+  }
+
+  .todo-create-input {
+    width: 100%;
+    padding: 15px 15px;
+    margin-bottom: 15px;
+    background-color: var(--input-bg-color);
+    border: 1px solid #555;
+    border-radius: 25px;
+    color: var(--secondary-color);
+    font-size: 16px;
+    transition: all 0.3s ease;
+
+    &::placeholder {
+      color: var(--invisible-text);
+    }
+
+    &:focus {
+      outline: none;
+      border-color: var(--primary-color); // Blue border on focus
+      box-shadow: 0 0 5px rgba(0, 97, 252, 0.7); // Light blue glow on focus
+    }
+  }
+
+  .create-btn {
+    width: 50%;
+    padding: 12px;
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    font-weight: bold;
+    font-size: 18px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+
+    &:hover {
+      background-color: var(--button-hover-color); // Darker blue on hover
+      transform: translateY(-2px); // Button hover effect
+    }
+
+    &:disabled {
+      background-color: #999; // Disabled state
+      cursor: not-allowed;
+    }
+  }
+
+  .error {
+    color: #dc3545; // Red color for errors
+    font-size: 14px;
+    margin-top: 10px;
+    text-align: center;
+  }
+}
+.edit-todo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 30px;
+  background-color: var(--secondary-color-bg);
+  border-radius: 25px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: var(--font-family);
+
+  /* Ensure the container is centered both vertically and horizontally */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Centers the container */
+  text-align: center;
+
+  .edit-todo-h1 {
+    font-size: 32px;
+    color: var(--secondary-color);
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-align: center;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: var(--primary-color);
+    }
+  }
+
+  .edit-todo-label {
+    font-size: 16px;
+    color: var(--secondary-color);
+    margin-bottom: 5px;
+    display: block;
+  }
+
+  .edit-todo-input {
+    width: 100%;
+    padding: 15px 15px;
+    margin-bottom: 15px;
+    background-color: var(--input-bg-color);
+    border: 1px solid #555;
+    border-radius: 25px;
+    color: var(--secondary-color);
+    font-size: 16px;
+    transition: all 0.3s ease;
+
+    &::placeholder {
+      color: var(--invisible-text);
+    }
+
+    &:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 5px rgba(0, 97, 252, 0.7); // Light blue glow on focus
+    }
+  }
+
+  .edit-todo-btn {
+    width: 50%;
+    padding: 12px;
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    font-weight: bold;
+    font-size: 18px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+
+    &:hover {
+      background-color: var(--button-hover-color);
+      transform: translateY(-2px);
+    }
+
+    &:disabled {
+      background-color: #999;
+      cursor: not-allowed;
+    }
+  }
+
+  .edit-todo-delete {
+    width: 50%;
+    padding: 12px;
+    background-color: #dc3545; // Red for delete button
+    color: var(--secondary-color);
+    font-weight: bold;
+    font-size: 18px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    margin-top: 10px;
+
+    &:hover {
+      background-color: (#dc3545, 10%);
+      transform: translateY(-2px);
+    }
+  }
+
+  .error {
+    color: #dc3545; // Red color for errors
+    font-size: 14px;
+    margin-top: 10px;
+    text-align: center;
+  }
+}
+/* ColorSettings.module.scss */
+.color-settings {
+  font-family: var(--font-family);
+  color: var(--secondary-color);
+  background: var(--background-color);
+  padding: 20px;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+
+  h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: var(--primary-color);
+  }
+
+  .colors-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+
+    .color-item {
+      background-color: var(--secondary-color-bg);
+      padding: 10px;
+      border-radius: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--secondary-color);
+
+      .color-box {
+        width: 50px;
+        height: 50px;
+        border-radius: 5px;
+        background-color: inherit;
+      }
+
+      .edit-btn {
+        background-color: var(--primary-color);
+        color: var(--secondary-color);
+        border: none;
+        padding: 5px 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+          background-color: var(--button-hover-color);
+        }
+      }
+    }
+  }
+
+  .edit-section {
+    margin-top: 30px;
+
+    h3 {
+      font-size: 1.5rem;
+      color: var(--primary-color);
+      margin-bottom: 15px;
+    }
+
+    .chrome-picker {
+      margin-bottom: 20px;
+    }
+
+    .save-btn {
+      background-color: var(--primary-color);
+      color: var(--secondary-color);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: var(--button-hover-color);
+      }
+    }
+
+    .reset-btn {
+      background-color: var(--secondary-color-bg);
+      color: var(--secondary-color);
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+      margin-left: 15px;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: (var(--secondary-color-bg), 10%);
+      }
+    }
+  }
+}
+.loading-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); // Semi-transparent black background
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  opacity: 1;
+  transition: opacity 1s ease-out; // Smooth fade-out transition
+
+  &.fade-out {
+    opacity: 0; // Fade out when loading is complete
+  }
+
+  l-bouncy-arc {
+    width: 70px;
+    height: 70px;
+  }
+}
+.animated-container{
+  padding: 0;
+  margin: 0;
 }
 
-.modal-actions {
-  margin-top: 20px;
-}
+.admin-page {
+  display: flex;
+  height: 100vh;
 
-.modal-button {
-  background-color: #ff3b30;
-  color: white;
-  border: none;
-  padding: 10px;
-  cursor: pointer;
-  margin: 0 10px;
-  border-radius: 3px;
-}
+  /* Sidebar (for both mobile and desktop) */
+  .admin-page-sidebar {
+    width: 250px;
+    background: var(--secondary-color-bg);
+    color: var(--secondary-color);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding-top: 20px;
+    padding-left: 20px;
+    box-shadow: 2px 0px 10px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+    transition: transform 0.3s ease; /* For smooth transition */
 
-.modal-button:hover {
-  background-color: #e50000;
-}
+    /* Initially hide sidebar for mobile */
+    transform: translateX(-100%);
 
+    /* When sidebar is open */
+    &.open {
+      transform: translateX(0); /* Slide sidebar in */
+    }
+
+    /* Media Query for Mobile (max-width: 768px) */
+    @media (max-width: 768px) {
+      /* Sidebar remains hidden by default */
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+
+      &.open {
+        transform: translateX(0); /* Show sidebar */
+      }
+    }
+    .admin-page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 50px;
+      padding: 10px;
+      background-color: var(--secondary-color-bg);
+      color: var(--secondary-color);
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .close-sidebar-button {
+      background: transparent;
+      border: none;
+      color: var(--secondary-color);
+      font-size: 24px;
+      cursor: pointer;
+      display: none;
+
+      &:hover {
+        color: var(--primary-color);
+      }
+      @media (max-width: 768px) {
+        display: block;
+
+      }
+    }
+
+    /* Styles for sidebar sections */
+    .sidebar-section {
+      margin-top: 50px;
+
+      h2 {
+        color: var(--secondary-color);
+        font-size: 18px;
+        margin-bottom: 10px;
+        font-weight: 600;
+        background-color: var(--background-color);
+        padding: 10px 20px;
+        border-radius: 25px;
+        width: 90%;
+      }
+
+      .admin-page-nav-menu {
+        padding: 0;
+        margin: 0;
+
+        ul {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+        }
+
+        li {
+          margin: 15px 0;
+
+          .admin-page-a {
+            display: flex;
+            align-items: center;
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-size: 16px;
+            padding: 10px;
+            transition: all 0.3s ease;
+            gap: 10px;
+            width: 60%;
+            border-radius: 25px;
+
+            &:hover {
+              background-color: var(--primary-color);
+              color: var(--secondary-color);
+              width: 60%;
+            }
+
+            /* This applies when the link is active */
+            &.active {
+              background-color: var(--primary-color); /* Change background */
+              color: var(--secondary-color); /* Change text color */
+              font-weight: bold; /* Bold text */
+              border-radius: 25px; /* Rounded corners */
+              width: 60%;
+            }
+
+            svg {
+              font-size: 18px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /* Mobile: Show sidebar when 'open' class is added */
+  .admin-page-sidebar.open {
+    transform: translateX(0); /* Show sidebar */
+  }
+
+  /* Sidebar Button (Mobile Only) */
+  .admin-page-sidebar-button {
+    display: none !important; /* Hide by default on larger screens */
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 30px;
+    background: transparent;
+    border: none;
+    color: var(--secondary-color);
+    z-index: 110;
+
+    /* Mobile view: Show the button when screen width is less than 768px */
+    @media screen and (max-width: 768px) {
+      display: block !important;
+    }
+  }
+
+  /* If the sidebar is open, hide the button */
+  .admin-page-sidebar.open + .admin-page .admin-page-sidebar-button {
+    display: none !important; /* Hide when sidebar is open */
+  }
+
+
+
+  /* Main Content (desktop and mobile) */
+  .admin-page-content {
+    margin-left: 250px; /* Offset content to the right of the sidebar */
+    padding: 20px;
+    width: 100%;
+    height: 100vh;
+    overflow-y: auto;
+
+    /* Adjust the layout for mobile */
+    @media screen and (max-width: 768px) {
+      margin-left: 0;
+      padding-left: 20px;
+    }
+  }
+
+  /* For larger screens, the sidebar should always be visible */
+  @media screen and (min-width: 769px) {
+    .admin-page-sidebar {
+      transform: translateX(0);
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "development": {
+    "dialect": "mysql",
+    "host": "localhost",
+    "port": 3306,
+    "database": "database_development",
+    "username": "root",
+    "password": ""
+  },
+  "test": {
+    "dialect": "mysql",
+    "host": "localhost",
+    "port": 3306,
+    "database": "database_test",
+    "username": "root",
+    "password": ""
+  },
+  "production": {
+    "dialect": "mysql",
+    "host": "localhost",
+    "port": 3306,
+    "database": "database_production",
+    "username": "root",
+    "password": ""
+  }
+}

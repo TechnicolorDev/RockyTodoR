@@ -6,7 +6,7 @@ import '../../../scss/App.scss';
 interface ConfirmationModalProps {
     isOpen: boolean;
     onClose: () => void;
-    onConfirm: () => Promise<void>;  // Change here to handle async
+    onConfirm: () => Promise<void>;
     message: string;
 }
 
